@@ -111,12 +111,25 @@ class FieldtypeYaml extends FieldtypeTextarea
         $parentInputfields = parent::___getConfigInputfields($field);
         $inputfields = new InputfieldWrapper();
 
+ /*       
+        
         foreach ($parentInputfields as $inputfield) {
             if (!in_array($inputfield->name, $forbidden)) {
                 $inputfields->append($inputfield);
             }
+        }       
+*/        
+        
+// see: https://processwire.com/talk/topic/8350-fieldtype-yaml/?page=2
+        
+     foreach($parentInputfields as $inputfield) {
+        if(in_array($inputfield->name, $forbidden)) {
+            $inputfield->collapsed = Inputfield::collapsedHidden;
         }
-
+        $inputfields->append($inputfield);
+    }       
+// 
+        
         $inputfields->add(array(
             'type' => 'InputfieldRadios',
             'name' => 'yamlParseAs',
